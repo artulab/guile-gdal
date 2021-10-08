@@ -1,0 +1,32 @@
+#!/bin/sh
+
+# guile-gdal --- FFI bindings for gdal
+# Copyright (c) 2021 Ahmet Artu Yildirim <ahmet@artulab.com>
+#
+# This file is part of guile-gdal.
+#
+# Guile-gdal is free software; you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as
+# published by the Free Software Foundation; either version 3 of the
+# License, or (at your option) any later version.
+#
+# Guile-gdal is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public
+# License along with guile-gdal.  If not, see
+# <http://www.gnu.org/licenses/>.
+
+abs_top_srcdir="`cd "@abs_top_srcdir@" > /dev/null; pwd`"
+abs_top_builddir="`cd "@abs_top_builddir@" > /dev/null; pwd`"
+
+GUILE_LOAD_COMPILED_PATH="$abs_top_builddir${GUILE_LOAD_COMPILED_PATH:+:}$GUILE_LOAD_COMPILED_PATH"
+GUILE_LOAD_PATH="$abs_top_builddir:$abs_top_srcdir${GUILE_LOAD_PATH:+:}:$GUILE_LOAD_PATH"
+export GUILE_LOAD_COMPILED_PATH GUILE_LOAD_PATH
+
+PATH="$abs_top_builddir:$PATH"
+export PATH
+
+exec "$@"

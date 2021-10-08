@@ -1,0 +1,11 @@
+(define-module (gdal config)
+  #:export (*libgdal-path*
+	    *libgdal*
+      *gdal-version*))
+
+(define *libgdal-path*
+  "@LIBGDAL_PATH@")
+
+(define *libgdal* (dynamic-link *libgdal-path*))
+
+(define *gdal-version* 32)

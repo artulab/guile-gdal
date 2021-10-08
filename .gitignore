@@ -1,0 +1,14 @@
+Makefile
+Makefile.in
+aclocal.m4
+autom4te.cache/
+build-aux/
+config.log
+config.status
+configure
+gdal/config.scm
+gdal.go
+gdal/*.go
+pre-inst-env
+.vscode/
+examples/raster/new-raster-small.tif
