@@ -444,3 +444,215 @@ Parameters:
 (export get-field-as-datetime-ex)
 
 ;;------------------------------------------------------------------------------
+
+(define-gdal-foreign %ogr-f-set-field-integer
+  void "OGR_F_SetFieldInteger" (list '* int int) 20)
+
+(define (set-field-integer h-feat i-field n-value)
+    "Set field to integer value.
+
+OFTInteger, OFTInteger64 and OFTReal fields will be set directly. OFTString
+fields will be assigned a string representation of the value, but not
+necessarily taking into account formatting constraints on this field. Other
+field types may be unaffected.
+
+Parameters:
+    h-feat: handle to the feature that owned the field.
+    i-field: the field to fetch, from 0 to GetFieldCount()-1.
+    n-value: the value to assign"
+  (%ogr-f-set-field-integer h-feat i-field n-value))
+
+(export set-field-integer)
+
+;;------------------------------------------------------------------------------
+
+(define-gdal-foreign %ogr-f-set-field-integer64
+  void "OGR_F_SetFieldInteger64" (list '* int int64) 20)
+
+(define (set-field-integer64 h-feat i-field n-value)
+    "Set field to 64 bit integer value.
+
+OFTInteger, OFTInteger64 and OFTReal fields will be set directly. OFTString
+fields will be assigned a string representation of the value, but not
+necessarily taking into account formatting constraints on this field. Other
+field types may be unaffected.
+
+Parameters:
+    h-feat: handle to the feature that owned the field.
+    i-field: the field to fetch, from 0 to GetFieldCount()-1.
+    n-value: the value to assign"
+  (%ogr-f-set-field-integer64 h-feat i-field n-value))
+
+(export set-field-integer64)
+
+;;------------------------------------------------------------------------------
+
+(define-gdal-foreign %ogr-f-set-field-integer64-list
+  void "OGR_F_SetFieldInteger64List" (list '* int int '*) 20)
+
+(define (set-field-integer64-list h-feat i-field values)
+    "Set field to list of 64 bit integers value.
+
+This function currently on has an effect of OFTIntegerList, OFTInteger64List
+and OFTRealList fields.
+
+Parameters:
+    h-feat: handle to the feature that owned the field.
+    i-field: the field to fetch, from 0 to GetFieldCount()-1.
+    values: the values to assign"
+  (%ogr-f-set-field-integer64-list h-feat i-field (length values)
+                                   (list->pointer values int64)))
+
+(export set-field-integer64-list)
+
+;;------------------------------------------------------------------------------
+
+(define-gdal-foreign %ogr-f-set-field-integer-list
+  void "OGR_F_SetFieldIntegerList" (list '* int int '*) 20)
+
+(define (set-field-integer-list h-feat i-field values)
+    "Set field to list of integers value.
+
+This function currently on has an effect of OFTIntegerList, OFTInteger64List
+and OFTRealList fields.
+
+Parameters:
+    h-feat: handle to the feature that owned the field.
+    i-field: the field to fetch, from 0 to GetFieldCount()-1.
+    values: the values to assign"
+  (%ogr-f-set-field-integer-list h-feat i-field (length values)
+                                 (list->pointer values int)))
+
+(export set-field-integer-list)
+
+;;------------------------------------------------------------------------------
+
+(define-gdal-foreign %ogr-f-set-field-null
+  void "OGR_F_SetFieldNull" (list '* int) 22)
+
+(define (set-field-null h-feat i-field)
+    "Clear a field, marking it as null.
+
+Parameters:
+    h-feat: handle to the feature that owned the field.
+    i-field: the field to fetch, from 0 to GetFieldCount()-1"
+  (%ogr-f-set-field-null h-feat i-field))
+
+(export set-field-null)
+
+;;------------------------------------------------------------------------------
+
+(define-gdal-foreign %ogr-f-set-field-raw
+  void "OGR_F_SetFieldRaw" (list '* int '*) 20)
+
+(define (set-field-raw h-feat i-field value)
+    "Set field.
+
+The passed value OGRField must be of exactly the same type as the target field,
+or an application crash may occur. The passed value is copied, and will not be
+affected. It remains the responsibility of the caller.
+
+Parameters:
+    h-feat: handle to the feature that owned the field.
+    i-field: the field to fetch, from 0 to GetFieldCount()-1.
+    value: handle on the value to assign"
+  (%ogr-f-set-field-raw h-feat i-field value))
+
+(export set-field-raw)
+
+;;------------------------------------------------------------------------------
+
+(define-gdal-foreign %ogr-f-set-field-string
+  void "OGR_F_SetFieldString" (list '* int '*) 20)
+
+(define (set-field-string h-feat i-field value)
+    "Set field to string value.
+
+OFTInteger fields will be set based on an atoi() conversion of the string.
+OFTInteger64 fields will be set based on an CPLAtoGIntBig() conversion of the
+string. OFTReal fields will be set based on an CPLAtof() conversion of the
+string. Other field types may be unaffected.
+
+Parameters:
+    h-feat: handle to the feature that owned the field.
+    i-field: the field to fetch, from 0 to GetFieldCount()-1.
+    value: string to assign"
+  (%ogr-f-set-field-string h-feat i-field (string->pointer value)))
+
+(export set-field-string)
+
+;;------------------------------------------------------------------------------
+
+(define-gdal-foreign %ogr-f-set-field-string-list
+  void "OGR_F_SetFieldStringList" (list '* int '*) 20)
+
+(define (set-field-string-list h-feat i-field lst)
+    "Set field to list of strings value.
+
+This function currently on has an effect of OFTStringList fields.
+
+Parameters:
+    h-feat: handle to the feature that owned the field.
+    i-field: the field to fetch, from 0 to GetFieldCount()-1.
+    lst: string list to assign"
+  (%ogr-f-set-field-string-list h-feat i-field (length lst)
+                                (string-list->pointerpointer lst)))
+
+(export set-field-string-list)
+
+;;------------------------------------------------------------------------------
+
+(define-gdal-foreign %ogr-f-set-field-date-time
+  void "OGR_F_SetFieldDateTime" (list '* int int int int int int int int) 20)
+
+(define (set-field-date-time h-feat i-field year month day hour
+                             minute second tz-flag)
+    "Set field to datetime.
+
+This method currently only has an effect for OFTDate, OFTTime and OFTDateTime
+fields.
+
+Parameters:
+    h-feat: handle to the feature that owned the field.
+    i-field: the field to fetch, from 0 to GetFieldCount()-1.
+    year: including century.
+    month: (1-12).
+    day: (1-31).
+    hour: (0-23).
+    minute: (0-59).
+    second: (0-59).
+    tz-flag: 0=unknown, 1=localtime, 100=GMT, see data model for details"
+  (%ogr-f-set-field-date-time h-feat i-field year month day
+                              hour minute second tz-flag))
+
+(export set-field-date-time)
+
+;;------------------------------------------------------------------------------
+
+(define-gdal-foreign %ogr-f-set-field-date-time-ex
+  void "OGR_F_SetFieldDateTimeEx" (list '* int int int int int
+                                        int float int) 20)
+
+(define (set-field-date-time-ex h-feat i-field year month day hour
+                              minute second tz-flag)
+    "Set field to datetime.
+
+This method currently only has an effect for OFTDate, OFTTime and OFTDateTime
+fields.
+
+Parameters:
+    h-feat: handle to the feature that owned the field.
+    i-field: the field to fetch, from 0 to GetFieldCount()-1.
+    year: including century.
+    month: (1-12).
+    day: (1-31).
+    hour: (0-23).
+    minute: (0-59).
+    second: (0-59, with millisecond accuracy).
+    tz-flag: 0=unknown, 1=localtime, 100=GMT, see data model for details"
+  (%ogr-f-set-field-date-time-ex h-feat i-field year month day
+                                hour minute second tz-flag))
+
+(export set-field-date-time-ex)
+
+;;------------------------------------------------------------------------------
